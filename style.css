@@ -1157,10 +1157,18 @@ svg.chart { width: 100%; height: 100%; overflow: visible; }
     padding: 20px;
     max-width: 95%;
   }
+  
+  /* Ajustes do menu superior no mobile */
+  .navbar-inner .nav-icon-btn { display: none; } /* Oculta ícones repetidos do topo */
+  .role-btn span { display: none; } /* Deixa apenas o emoji no seletor de papel */
+  .role-btn { padding: 8px 14px; font-size: 14px; } /* Aumenta um pouco o emoji para clique */
+  .logo-text { font-size: 14px; }
+  body { padding-bottom: 64px; } /* Evita conteúdo escondido atrás do bottom nav */
+  .bottom-nav { display: flex; } /* Ativa bottom nav */
 }
 
 @media (max-width: 480px) {
-  .logo-text { display: none; } /* Oculta texto da logo para caber o toggle de perfil */
+  .logo-text { display: none; } /* Oculta texto da logo para caber o toggle de perfil em telas minúsculas */
   
   .search-bar-wrap {
     flex-direction: column;
@@ -1194,4 +1202,64 @@ svg.chart { width: 100%; height: 100%; overflow: visible; }
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ── ESTILO BASE DO BOTTOM NAV ───────────────────────── */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(8, 10, 20, 0.94);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid var(--border);
+  z-index: 1000;
+  padding: 0 16px;
+}
+
+.bottom-nav-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.bottom-nav-link {
+  background: none;
+  border: none;
+  color: var(--text-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  flex: 1;
+  height: 100%;
+}
+
+.bottom-nav-link:hover {
+  color: var(--text-2);
+}
+
+.bottom-nav-link.active {
+  color: var(--primary-light);
+}
+
+.bottom-nav-icon {
+  font-size: 18px;
+  transition: var(--transition);
+}
+
+.bottom-nav-link.active .bottom-nav-icon {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 8px rgba(124, 58, 255, 0.6));
+}
+
 

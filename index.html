@@ -21,8 +21,8 @@
     </a>
 
     <div class="nav-role-toggle">
-      <button class="role-btn active" id="role-empresa" onclick="setRole('empresa')">🏢 Empresa</button>
-      <button class="role-btn" id="role-influencer" onclick="setRole('influencer')">✨ Influenciador</button>
+      <button class="role-btn active" id="role-empresa" onclick="setRole('empresa')">🏢 <span>Empresa</span></button>
+      <button class="role-btn" id="role-influencer" onclick="setRole('influencer')">✨ <span>Influenciador</span></button>
     </div>
 
     <nav class="nav-links" id="nav-links-empresa">
@@ -878,6 +878,38 @@
 
 <!-- ═══════ TOAST CONTAINER ═══════ -->
 <div class="toast-container" id="toast-container"></div>
+
+<!-- ═══════ BOTTOM NAVIGATION (MOBILE) ═══════ -->
+<nav class="bottom-nav" id="mobile-bottom-nav">
+  <div class="bottom-nav-inner" id="bottom-links-empresa">
+    <button class="bottom-nav-link active" onclick="navigate('search')" data-view="search">
+      <span class="bottom-nav-icon">🔍</span>
+      <span class="bottom-nav-text">Buscar</span>
+    </button>
+    <button class="bottom-nav-link" onclick="navigate('kanban')" data-view="kanban">
+      <span class="bottom-nav-icon">📋</span>
+      <span class="bottom-nav-text">Campanhas</span>
+    </button>
+    <button class="bottom-nav-link" onclick="navigate('chat')" data-view="chat">
+      <span class="bottom-nav-icon">💬</span>
+      <span class="bottom-nav-text">Chat</span>
+    </button>
+  </div>
+  <div class="bottom-nav-inner hidden" id="bottom-links-influencer">
+    <button class="bottom-nav-link" onclick="navigate('inf-dash')" data-view="inf-dash">
+      <span class="bottom-nav-icon">📊</span>
+      <span class="bottom-nav-text">Painel</span>
+    </button>
+    <button class="bottom-nav-link" onclick="navigate('profile')" data-view="profile">
+      <span class="bottom-nav-icon">👤</span>
+      <span class="bottom-nav-text">Perfil</span>
+    </button>
+    <button class="bottom-nav-link" onclick="navigate('chat')" data-view="chat">
+      <span class="bottom-nav-icon">💬</span>
+      <span class="bottom-nav-text">Chat</span>
+    </button>
+  </div>
+</nav>
 
 <script src="app.js"></script>
 </body>

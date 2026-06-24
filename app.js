@@ -255,8 +255,16 @@ function navigate(viewId) {
   const targetView = document.getElementById(`view-${viewId}`);
   if (targetView) targetView.classList.add("active");
   
-  // Update navbar state
+  // Update navbar state (Desktop)
   document.querySelectorAll(".nav-link").forEach(link => {
+    link.classList.remove("active");
+    if (link.getAttribute("data-view") === viewId) {
+      link.classList.add("active");
+    }
+  });
+
+  // Update bottom nav state (Mobile)
+  document.querySelectorAll(".bottom-nav-link").forEach(link => {
     link.classList.remove("active");
     if (link.getAttribute("data-view") === viewId) {
       link.classList.add("active");
@@ -280,17 +288,29 @@ function setRole(role) {
   const empNav = document.getElementById("nav-links-empresa");
   const infNav = document.getElementById("nav-links-influencer");
   
+  // Containers Bottom Nav
+  const empBottom = document.getElementById("bottom-links-empresa");
+  const infBottom = document.getElementById("bottom-links-influencer");
+  
   if (role === "empresa") {
     empToggle.classList.add("active");
     infToggle.classList.remove("active");
     empNav.classList.remove("hidden");
     infNav.classList.add("hidden");
+    
+    if (empBottom) empBottom.classList.remove("hidden");
+    if (infBottom) infBottom.classList.add("hidden");
+    
     navigate("search");
   } else {
     empToggle.classList.remove("active");
     infToggle.classList.add("active");
     empNav.classList.add("hidden");
     infNav.classList.remove("hidden");
+    
+    if (empBottom) empBottom.classList.add("hidden");
+    if (infBottom) infBottom.classList.remove("hidden");
+    
     navigate("inf-dash");
   }
   
