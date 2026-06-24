@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InfluenceHub — Marketplace de Marketing de Influência</title>
+  <meta name="description" content="A plataforma premium que conecta marcas e influenciadores. Encontre o influenciador perfeito, gerencie campanhas e impulsione seus resultados." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ═══════ NAVBAR ═══════ -->
+<nav class="navbar" id="main-navbar">
+  <div class="navbar-inner">
+    <a class="logo" onclick="navigate('search')">
+      <div class="logo-icon">⚡</div>
+      <span class="logo-text">Influence<span>Hub</span></span>
+    </a>
+
+    <div class="nav-role-toggle">
+      <button class="role-btn active" id="role-empresa" onclick="setRole('empresa')">🏢 Empresa</button>
+      <button class="role-btn" id="role-influencer" onclick="setRole('influencer')">✨ Influenciador</button>
+    </div>
+
+    <nav class="nav-links" id="nav-links-empresa">
+      <button class="nav-link active" onclick="navigate('search')" data-view="search">🔍 Buscar</button>
+      <button class="nav-link" onclick="navigate('kanban')" data-view="kanban">📋 Campanhas</button>
+      <button class="nav-link" onclick="navigate('chat')" data-view="chat">💬 Mensagens</button>
+    </nav>
+
+    <nav class="nav-links hidden" id="nav-links-influencer">
+      <button class="nav-link active" onclick="navigate('inf-dash')" data-view="inf-dash">📊 Painel</button>
+      <button class="nav-link" onclick="navigate('profile')" data-view="profile">👤 Meu Perfil</button>
+      <button class="nav-link" onclick="navigate('chat')" data-view="chat">💬 Mensagens</button>
+    </nav>
+
+    <div class="nav-right">
+      <div class="nav-icon-btn" onclick="navigate('chat')" title="Mensagens">
+        💬
+        <div class="notif-dot"></div>
+      </div>
+      <div class="nav-icon-btn" title="Notificações">
+        🔔
+        <div class="notif-dot"></div>
+      </div>
+      <div class="avatar-nav" onclick="navigate('profile')" title="Meu Perfil">MC</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════ MAIN CONTENT ═══════ -->
+<main class="main-content">
+
+  <!-- ──────────────────────────────────────────────────
+       SCREEN 1: DASHBOARD DE BUSCA (EMPRESA)
+  ────────────────────────────────────────────────── -->
+  <div class="view active" id="view-search">
+
+    <!-- Hero Search -->
+    <section class="search-hero">
+      <div class="search-hero-label">✦ 12.400+ Influenciadores Verificados</div>
+      <h1 class="h1">Encontre o <span class="gradient-text">influenciador perfeito</span><br/>para sua marca</h1>
+      <p class="body-lg" style="margin-top:12px; max-width:520px; margin-left:auto; margin-right:auto;">
+        Conecte-se com criadores de conteúdo autênticos que engajam o público certo para suas campanhas.
+      </p>
+
+      <div class="search-bar-wrap">
+        <div class="search-bar" style="flex:1">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Buscar por nome, nicho ou palavra-chave..." oninput="filterInfluencers()" />
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="filterInfluencers()">Buscar</button>
+      </div>
+
+      <div class="filter-row">
+        <div class="filter-chip active" onclick="toggleFilter(this,'Todos')" data-filter="Todos">
+          <span class="chip-icon">⚡</span> Todos
+        </div>
+        <div class="filter-chip" onclick="toggleFilter(this,'Lifestyle')" data-filter="Lifestyle">
+          <span class="chip-icon">✨</span> Lifestyle
+        </div>
+        <div class="filter-chip" onclick="toggleFilter(this,'Tech')" data-filter="Tech">
+          <span class="chip-icon">💻</span> Tech
+        </div>
+        <div class="filter-chip" onclick="toggleFilter(this,'Fitness')" data-filter="Fitness">
+          <span class="chip-icon">🏋️</span> Fitness
+        </div>
+        <div class="filter-chip" onclick="toggleFilter(this,'Moda')" data-filter="Moda">
+          <span class="chip-icon">👗</span> Moda
+        </div>
+        <div class="filter-chip" onclick="toggleFilter(this,'Gastronomia')" data-filter="Gastronomia">
+          <span class="chip-icon">🍳</span> Gastronomia
+        </div>
+        <div class="filter-chip" onclick="toggleFilter(this,'Viagem')" data-filter="Viagem">
+          <span class="chip-icon">✈️</span> Viagem
+        </div>
+        <div class="filter-chip" onclick="toggleFilter(this,'Games')" data-filter="Games">
+          <span class="chip-icon">🎮</span> Games
+        </div>
+        <div class="filter-chip" onclick="document.getElementById('adv-filters').classList.toggle('open')">
+          <span class="chip-icon">⚙️</span> Filtros Avançados
+        </div>
+      </div>
+    </section>
+
+    <!-- Advanced Filters -->
+    <div class="advanced-filters" id="adv-filters">
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label>Localidade</label>
+          <select class="filter-select" onchange="filterInfluencers()">
+            <option>Todos os estados</option>
+            <option>São Paulo</option>
+            <option>Rio de Janeiro</option>
+            <option>Belo Horizonte</option>
+            <option>Porto Alegre</option>
+            <option>Fortaleza</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Plataforma</label>
+          <select class="filter-select">
+            <option>Todas</option>
+            <option>Instagram</option>
+            <option>TikTok</option>
+            <option>YouTube</option>
+            <option>Twitter</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Alcance (seguidores)</label>
+          <div class="range-wrap">
+            <input type="range" min="0" max="100" value="60" id="range-followers" oninput="updateRange('range-followers','range-val-followers','K',0)" />
+            <div class="range-labels">
+              <span>1K</span>
+              <span id="range-val-followers">600K</span>
+            </div>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Taxa de Engajamento</label>
+          <div class="range-wrap">
+            <input type="range" min="0" max="100" value="35" id="range-eng" oninput="updateRange('range-eng','range-val-eng','%',2)" />
+            <div class="range-labels">
+              <span>0%</span>
+              <span id="range-val-eng">7%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-header">
+      <p class="results-count">Exibindo <strong id="results-count-num">12</strong> influenciadores</p>
+      <div class="flex gap-8" style="align-items:center">
+        <span class="body-sm">Ordenar por:</span>
+        <select class="filter-select" style="width:auto; padding:7px 12px; font-size:13px">
+          <option>Engajamento</option>
+          <option>Seguidores</option>
+          <option>Preço</option>
+          <option>Relevância</option>
+        </select>
+        <div class="view-toggle">
+          <div class="view-btn active" title="Grid">⊞</div>
+          <div class="view-btn" title="Lista">☰</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Influencer Grid -->
+    <div class="influencer-grid" id="influencer-grid">
+      <!-- cards are injected by JS -->
+    </div>
+
+  </div>
+
+  <!-- ──────────────────────────────────────────────────
+       SCREEN 2: PERFIL DO INFLUENCIADOR
+  ────────────────────────────────────────────────── -->
+  <div class="view" id="view-profile">
+
+    <div class="profile-hero">
+      <!-- Cover -->
+      <div class="profile-cover">
+        <div class="profile-cover-pattern"></div>
+        <div class="profile-cover-actions">
+          <button class="btn btn-ghost btn-sm" onclick="navigate('search')">← Voltar</button>
+          <button class="btn btn-ghost btn-sm">⋯ Mais</button>
+        </div>
+      </div>
+
+      <!-- Info Row -->
+      <div class="profile-info-row">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar" id="profile-avatar-display">
+            <span id="profile-avatar-emoji">🦋</span>
+          </div>
+          <div class="profile-verified-badge">✓</div>
+        </div>
+
+        <div class="profile-meta">
+          <h1 class="profile-name" id="profile-name-display">Mariana Costa</h1>
+          <p class="profile-handle" id="profile-handle-display">@marianacosta · São Paulo, SP</p>
+          <div class="profile-tags" id="profile-tags-display">
+            <span class="badge badge-primary">✨ Lifestyle</span>
+            <span class="badge badge-accent">🌿 Sustentabilidade</span>
+            <span class="badge badge-success">Mega</span>
+          </div>
+        </div>
+
+        <div class="profile-actions-wrap">
+          <button class="btn btn-ghost" onclick="navigate('chat')">💬 Mensagem</button>
+          <button class="btn btn-primary btn-lg" onclick="openModal()">🚀 Propor Campanha</button>
+        </div>
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="profile-stats-bar">
+        <div class="profile-stat">
+          <div class="profile-stat-value gradient-text" id="profile-stat-seg">2.4M</div>
+          <div class="profile-stat-label">Seguidores</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" style="color:var(--accent)">8.7%</div>
+          <div class="profile-stat-label">Engajamento</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value">48</div>
+          <div class="profile-stat-label">Campanhas</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" style="color:var(--success)">4.9★</div>
+          <div class="profile-stat-label">Avaliação</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="profile-tabs">
+        <button class="profile-tab active" onclick="switchProfileTab('overview',this)">Visão Geral</button>
+        <button class="profile-tab" onclick="switchProfileTab('performance',this)">📈 Performance</button>
+        <button class="profile-tab" onclick="switchProfileTab('cases',this)">🏆 Cases de Sucesso</button>
+        <button class="profile-tab" onclick="switchProfileTab('reviews',this)">⭐ Avaliações</button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="profile-content">
+      <div class="profile-main-col">
+
+        <!-- Overview Tab -->
+        <div id="tab-overview">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <div class="profile-section-title">Bio</div>
+                <p class="body-lg" id="profile-bio-display" style="margin-top:4px">
+                  Criadora de conteúdo focada em lifestyle sustentável e moda consciente. Parceira de marcas que acreditam em impacto positivo. Mais de 5 anos conectando comunidades ao que há de melhor em bem-estar e estilo de vida.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title">📊 Alcance & Engajamento</span>
+              <div class="chart-legend">
+                <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div> Alcance</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Engajamento</div>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <svg class="chart" viewBox="0 0 600 180" preserveAspectRatio="none" id="reach-chart"></svg>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title">📱 Distribuição por Plataforma</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:4px">
+              <div class="metric-cell">
+                <div style="font-size:22px;margin-bottom:6px">📸</div>
+                <div class="metric-value highlight">1.8M</div>
+                <div class="metric-label">Instagram</div>
+              </div>
+              <div class="metric-cell">
+                <div style="font-size:22px;margin-bottom:6px">🎵</div>
+                <div class="metric-value highlight">420K</div>
+                <div class="metric-label">TikTok</div>
+              </div>
+              <div class="metric-cell">
+                <div style="font-size:22px;margin-bottom:6px">▶️</div>
+                <div class="metric-value highlight">180K</div>
+                <div class="metric-label">YouTube</div>
+              </div>
+              <div class="metric-cell">
+                <div style="font-size:22px;margin-bottom:6px">🐦</div>
+                <div class="metric-value">42K</div>
+                <div class="metric-label">Twitter</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Tab (hidden) -->
+        <div id="tab-performance" class="hidden">
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title">🎯 Taxa de Engajamento por Post</span>
+              <select class="filter-select" style="width:auto;padding:6px 12px;font-size:12px">
+                <option>Últimos 30 dias</option>
+                <option>Últimos 90 dias</option>
+              </select>
+            </div>
+            <div class="chart-wrap">
+              <svg class="chart" viewBox="0 0 600 180" preserveAspectRatio="none" id="eng-chart"></svg>
+            </div>
+          </div>
+          <div class="chart-card" style="margin-top:0">
+            <div class="chart-header"><span class="chart-title">👥 Perfil da Audiência</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px">
+              <div>
+                <div class="profile-section-title" style="margin-bottom:12px">Gênero</div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>👩 Feminino</span><strong>68%</strong></div>
+                    <div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:68%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:3px"></div></div>
+                  </div>
+                  <div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>👨 Masculino</span><strong>32%</strong></div>
+                    <div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:32%;background:linear-gradient(90deg,var(--accent),#0099cc);border-radius:3px"></div></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="profile-section-title" style="margin-bottom:12px">Faixa Etária</div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>18-24</span><strong>38%</strong></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:38%;background:var(--success);border-radius:3px"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>25-34</span><strong>45%</strong></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:45%;background:var(--primary);border-radius:3px"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>35-44</span><strong>17%</strong></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:17%;background:var(--warning);border-radius:3px"></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cases Tab (hidden) -->
+        <div id="tab-cases" class="hidden">
+          <div class="chart-card">
+            <div class="chart-header"><span class="chart-title">🏆 Cases de Sucesso</span></div>
+            <div class="cases-grid">
+              <div class="case-thumb" onclick="showToast('📁 Abrindo case de sucesso...')">
+                <div class="case-thumb-bg" style="background:linear-gradient(135deg,#1a0550,#0d1a33)">🌿</div>
+                <div class="case-overlay">
+                  <div class="case-overlay-title">NaturalSkin Co.</div>
+                  <div class="case-overlay-sub">+340% de vendas em 30 dias</div>
+                </div>
+              </div>
+              <div class="case-thumb" onclick="showToast('📁 Abrindo case de sucesso...')">
+                <div class="case-thumb-bg" style="background:linear-gradient(135deg,#1a2050,#0d1a20)">👗</div>
+                <div class="case-overlay">
+                  <div class="case-overlay-title">FashionBrand</div>
+                  <div class="case-overlay-sub">2.1M impressões orgânicas</div>
+                </div>
+              </div>
+              <div class="case-thumb" onclick="showToast('📁 Abrindo case de sucesso...')">
+                <div class="case-thumb-bg" style="background:linear-gradient(135deg,#0d2010,#1a1000)">🧴</div>
+                <div class="case-overlay">
+                  <div class="case-overlay-title">BeautyCo</div>
+                  <div class="case-overlay-sub">8.9% CTR na campanha</div>
+                </div>
+              </div>
+              <div class="case-thumb" onclick="showToast('📁 Abrindo case de sucesso...')">
+                <div class="case-thumb-bg" style="background:linear-gradient(135deg,#20100d,#1a0510)">🏃</div>
+                <div class="case-overlay">
+                  <div class="case-overlay-title">SportWear</div>
+                  <div class="case-overlay-sub">15K novos seguidores p/ marca</div>
+                </div>
+              </div>
+              <div class="case-thumb" onclick="showToast('📁 Abrindo case de sucesso...')">
+                <div class="case-thumb-bg" style="background:linear-gradient(135deg,#1a1500,#0d1020)">🌊</div>
+                <div class="case-overlay">
+                  <div class="case-overlay-title">EcoWater</div>
+                  <div class="case-overlay-sub">ROAS 4.2x na campanha</div>
+                </div>
+              </div>
+              <div class="case-thumb" onclick="showToast('📁 Abrindo case de sucesso...')">
+                <div class="case-thumb-bg" style="background:linear-gradient(135deg,#200d1a,#0d0520)">🧘</div>
+                <div class="case-overlay">
+                  <div class="case-overlay-title">MindfulApp</div>
+                  <div class="case-overlay-sub">12K downloads em 1 semana</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews Tab (hidden) -->
+        <div id="tab-reviews" class="hidden">
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title">⭐ Avaliações de Empresas</span>
+              <div style="font-size:28px;font-weight:900;color:var(--warning)">4.9<span style="font-size:14px;color:var(--text-3);font-weight:400;margin-left:4px">/5</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:16px;margin-top:12px">
+              <div class="proposal-card" style="cursor:default;transform:none!important">
+                <div class="proposal-brand-logo" style="background:linear-gradient(135deg,#1a0550,#0d0520)">👑</div>
+                <div class="proposal-info">
+                  <div class="proposal-brand">LuxuryBrand</div>
+                  <p class="body-sm" style="margin-top:4px">"Mariana superou todas as expectativas. Entregou o briefing no prazo, o engajamento foi absurdo e as vendas bateram recorde. Já fechamos para a próxima campanha!"</p>
+                </div>
+                <div class="proposal-right" style="flex-shrink:0">
+                  <div style="color:var(--warning);font-size:16px">★★★★★</div>
+                  <div class="kcard-due" style="margin-top:4px">Mar 2026</div>
+                </div>
+              </div>
+              <div class="proposal-card" style="cursor:default;transform:none!important">
+                <div class="proposal-brand-logo" style="background:linear-gradient(135deg,#001a33,#000d1a)">🌿</div>
+                <div class="proposal-info">
+                  <div class="proposal-brand">EcoBrand</div>
+                  <p class="body-sm" style="margin-top:4px">"Profissionalismo e criatividade de alto nível. A parceria foi incrível, o conteúdo ficou alinhado com nossa identidade visual e gerou muito engajamento real."</p>
+                </div>
+                <div class="proposal-right">
+                  <div style="color:var(--warning);font-size:16px">★★★★★</div>
+                  <div class="kcard-due" style="margin-top:4px">Jan 2026</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="profile-sidebar">
+        <div class="info-card">
+          <div class="profile-section-title" style="margin-bottom:16px">💰 Valores de Serviço</div>
+          <div class="price-tag" id="profile-price-display">R$ 8.500</div>
+          <div class="body-sm" style="margin-top:4px;margin-bottom:16px">por post no feed (negociável)</div>
+
+          <button class="btn btn-primary btn-full btn-lg" onclick="openModal()" style="margin-bottom:10px">
+            🚀 Propor Campanha
+          </button>
+          <button class="btn btn-ghost btn-full" onclick="navigate('chat')">
+            💬 Enviar Mensagem
+          </button>
+        </div>
+
+        <div class="info-card">
+          <div class="profile-section-title" style="margin-bottom:4px">📋 Informações</div>
+          <div class="info-row"><span class="info-row-label">Localidade</span><span class="info-row-value" id="profile-loc-display">São Paulo, SP</span></div>
+          <div class="info-row"><span class="info-row-label">Nicho</span><span class="info-row-value" id="profile-niche-display">Lifestyle</span></div>
+          <div class="info-row"><span class="info-row-label">Resposta</span><span class="info-row-value" style="color:var(--success)">≤ 2 horas</span></div>
+          <div class="info-row"><span class="info-row-label">Disponibilidade</span><span class="info-row-value" style="color:var(--success)">Disponível</span></div>
+          <div class="info-row"><span class="info-row-label">Idiomas</span><span class="info-row-value">PT, EN, ES</span></div>
+          <div class="info-row"><span class="info-row-label">Campanhas</span><span class="info-row-value">48 concluídas</span></div>
+        </div>
+
+        <div class="info-card">
+          <div class="profile-section-title" style="margin-bottom:12px">🌐 Redes Sociais</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="flex-between" style="padding:10px;background:var(--surface);border-radius:var(--radius-md);border:1px solid var(--border)">
+              <div class="flex gap-8"><span>📸</span><span style="font-size:14px;font-weight:600">Instagram</span></div>
+              <span style="font-size:14px;font-weight:700;color:var(--accent)">1.8M</span>
+            </div>
+            <div class="flex-between" style="padding:10px;background:var(--surface);border-radius:var(--radius-md);border:1px solid var(--border)">
+              <div class="flex gap-8"><span>🎵</span><span style="font-size:14px;font-weight:600">TikTok</span></div>
+              <span style="font-size:14px;font-weight:700;color:var(--accent)">420K</span>
+            </div>
+            <div class="flex-between" style="padding:10px;background:var(--surface);border-radius:var(--radius-md);border:1px solid var(--border)">
+              <div class="flex gap-8"><span>▶️</span><span style="font-size:14px;font-weight:600">YouTube</span></div>
+              <span style="font-size:14px;font-weight:700;color:var(--accent)">180K</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ──────────────────────────────────────────────────
+       SCREEN 3: KANBAN CAMPANHAS
+  ────────────────────────────────────────────────── -->
+  <div class="view" id="view-kanban">
+
+    <div class="kanban-header">
+      <div>
+        <h2 class="h2">📋 Painel de Campanhas</h2>
+        <p class="body-sm" style="margin-top:4px">Gerencie todas as suas campanhas em tempo real</p>
+      </div>
+      <div class="flex gap-8">
+        <button class="btn btn-ghost">🔍 Filtrar</button>
+        <button class="btn btn-primary" onclick="openModal()">+ Nova Campanha</button>
+      </div>
+    </div>
+
+    <!-- Summary Bar -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:0 32px 24px">
+      <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--primary)"></div>
+        <div class="stat-card-icon" style="background:rgba(124,58,255,0.15)">📝</div>
+        <div class="stat-card-value">4</div>
+        <div class="stat-card-label">Em Proposta</div>
+        <div class="stat-card-change change-up">↑ +2 esta semana</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--warning)"></div>
+        <div class="stat-card-icon" style="background:rgba(255,184,0,0.15)">🎬</div>
+        <div class="stat-card-value">3</div>
+        <div class="stat-card-label">Em Produção</div>
+        <div class="stat-card-change change-up">↑ Dentro do prazo</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--accent)"></div>
+        <div class="stat-card-icon" style="background:rgba(0,212,255,0.15)">👁️</div>
+        <div class="stat-card-value">2</div>
+        <div class="stat-card-label">Aguardando Aprovação</div>
+        <div class="stat-card-change change-down">⚠ Ação necessária</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--success)"></div>
+        <div class="stat-card-icon" style="background:rgba(0,233,106,0.15)">✅</div>
+        <div class="stat-card-value">12</div>
+        <div class="stat-card-label">Finalizadas</div>
+        <div class="stat-card-change change-up">↑ R$ 84.200 investido</div>
+      </div>
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="kanban-board">
+      <!-- Col: Proposta -->
+      <div class="kanban-col">
+        <div class="kanban-col-header">
+          <div class="kanban-col-title">
+            <div class="col-indicator" style="background:var(--primary)"></div> Proposta
+          </div>
+          <span class="col-count">4</span>
+        </div>
+        <div class="kanban-col-body" id="col-proposta"></div>
+      </div>
+      <!-- Col: Em Produção -->
+      <div class="kanban-col">
+        <div class="kanban-col-header">
+          <div class="kanban-col-title">
+            <div class="col-indicator" style="background:var(--warning)"></div> Em Produção
+          </div>
+          <span class="col-count">3</span>
+        </div>
+        <div class="kanban-col-body" id="col-producao"></div>
+      </div>
+      <!-- Col: Aguardando Aprovação -->
+      <div class="kanban-col">
+        <div class="kanban-col-header">
+          <div class="kanban-col-title">
+            <div class="col-indicator" style="background:var(--accent)"></div> Aguardando
+          </div>
+          <span class="col-count">2</span>
+        </div>
+        <div class="kanban-col-body" id="col-aguardando"></div>
+      </div>
+      <!-- Col: Finalizado -->
+      <div class="kanban-col">
+        <div class="kanban-col-header">
+          <div class="kanban-col-title">
+            <div class="col-indicator" style="background:var(--success)"></div> Finalizado
+          </div>
+          <span class="col-count">12</span>
+        </div>
+        <div class="kanban-col-body" id="col-finalizado"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ──────────────────────────────────────────────────
+       SCREEN 4: CHAT DIRETO
+  ────────────────────────────────────────────────── -->
+  <div class="view" id="view-chat">
+    <div class="chat-layout">
+
+      <!-- Sidebar -->
+      <div class="chat-sidebar">
+        <div class="chat-sidebar-header">
+          <span class="chat-sidebar-title">💬 Mensagens</span>
+          <button class="btn btn-primary btn-sm">+ Nova</button>
+        </div>
+        <div class="chat-search">
+          <input type="text" class="chat-search-inp" placeholder="🔍 Buscar conversa..." />
+        </div>
+        <div class="chat-list" id="chat-list">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+
+      <!-- Chat Main -->
+      <div class="chat-main">
+        <div class="chat-main-header">
+          <div class="chat-item-avatar" style="width:40px;height:40px;font-size:14px">🦋</div>
+          <div class="chat-peer-info">
+            <div class="chat-peer-name" id="chat-peer-name">Mariana Costa</div>
+            <div class="chat-peer-status">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--success)"></div>
+              Online agora
+            </div>
+          </div>
+          <div class="chat-actions">
+            <div class="chat-action-btn" title="Ligar">📞</div>
+            <div class="chat-action-btn" title="Vídeo">🎥</div>
+            <div class="chat-action-btn" onclick="navigate('profile')" title="Ver Perfil">👤</div>
+            <div class="chat-action-btn" title="Mais">⋯</div>
+          </div>
+        </div>
+
+        <!-- Campaign Context Banner -->
+        <div style="padding:12px 24px;background:rgba(124,58,255,0.08);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:18px">📋</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">Campanha: Lançamento Verão 2026</div>
+              <div style="font-size:12px;color:var(--text-3)">Proposta enviada · Aguardando resposta</div>
+            </div>
+          </div>
+          <div class="flex gap-8">
+            <button class="btn btn-ghost btn-sm">Ver Proposta</button>
+            <button class="btn btn-success btn-sm" onclick="showToast('✅ Proposta aprovada!')">Aprovar</button>
+          </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+          <!-- Injected by JS -->
+        </div>
+
+        <div class="chat-input-area">
+          <div class="chat-input-tools">
+            <button class="chat-tool-btn" title="Emoji">😊</button>
+            <button class="chat-tool-btn" title="Arquivo">📎</button>
+            <button class="chat-tool-btn" title="Imagem">🖼️</button>
+            <button class="chat-tool-btn" title="Proposta">📋</button>
+          </div>
+          <div class="chat-input-row">
+            <textarea class="chat-input-box" id="chat-input" placeholder="Escreva uma mensagem..." rows="1"
+              onkeydown="handleChatKey(event)"></textarea>
+            <button class="chat-send-btn" onclick="sendMessage()">➤</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ──────────────────────────────────────────────────
+       SCREEN 5: INFLUENCER DASHBOARD
+  ────────────────────────────────────────────────── -->
+  <div class="view" id="view-inf-dash">
+
+    <div style="padding:32px 32px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div class="search-hero-label" style="margin-bottom:8px;display:inline-flex">✨ Influenciador</div>
+        <h2 class="h2">Olá, Mariana! 👋</h2>
+        <p class="body-sm" style="margin-top:4px">Você tem <strong style="color:var(--accent)">3 novas propostas</strong> aguardando resposta</p>
+      </div>
+      <button class="btn btn-primary" onclick="navigate('profile')">Ver Meu Perfil →</button>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="inf-dash-grid">
+      <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--primary)"></div>
+        <div class="stat-card-icon" style="background:rgba(124,58,255,0.15)">👥</div>
+        <div class="stat-card-value gradient-text">2.4M</div>
+        <div class="stat-card-label">Total de Seguidores</div>
+        <div class="stat-card-change change-up">↑ +12.4K este mês</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--accent)"></div>
+        <div class="stat-card-icon" style="background:rgba(0,212,255,0.15)">📊</div>
+        <div class="stat-card-value" style="color:var(--accent)">8.7%</div>
+        <div class="stat-card-label">Taxa de Engajamento</div>
+        <div class="stat-card-change change-up">↑ +0.3% vs. mês anterior</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--success)"></div>
+        <div class="stat-card-icon" style="background:rgba(0,233,106,0.15)">💰</div>
+        <div class="stat-card-value" style="color:var(--success)">R$42K</div>
+        <div class="stat-card-label">Ganhos Este Mês</div>
+        <div class="stat-card-change change-up">↑ +18% vs. mês anterior</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-accent" style="background:var(--warning)"></div>
+        <div class="stat-card-icon" style="background:rgba(255,184,0,0.15)">📝</div>
+        <div class="stat-card-value" style="color:var(--warning)">3</div>
+        <div class="stat-card-label">Propostas Novas</div>
+        <div class="stat-card-change change-up">↑ Responda em breve</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="inf-dash-body">
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <h3 class="h3">📨 Propostas Recebidas</h3>
+          <button class="btn btn-ghost btn-sm">Ver todas</button>
+        </div>
+        <div class="proposals-list">
+          <div class="proposal-card">
+            <div class="proposal-brand-logo" style="background:linear-gradient(135deg,#200d40,#0d0020)">👑</div>
+            <div class="proposal-info">
+              <div class="proposal-brand">LuxuryBrand</div>
+              <div class="proposal-campaign">Campanha Coleção Outono/Inverno 2026</div>
+              <div class="proposal-tags">
+                <span class="badge badge-primary">Moda</span>
+                <span class="badge badge-accent">3 posts</span>
+                <span class="badge badge-warning">⚡ Urgente</span>
+              </div>
+            </div>
+            <div class="proposal-right">
+              <div class="proposal-value">R$ 12.000</div>
+              <div class="proposal-deadline">Prazo: 10 Jul 2026</div>
+              <div class="proposal-actions">
+                <button class="btn btn-ghost btn-sm" onclick="navigate('chat')">Chat</button>
+                <button class="btn btn-success btn-sm" onclick="showToast('✅ Proposta aceita!')">Aceitar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="proposal-card">
+            <div class="proposal-brand-logo" style="background:linear-gradient(135deg,#001a10,#000d1a)">🌿</div>
+            <div class="proposal-info">
+              <div class="proposal-brand">EcoLife Products</div>
+              <div class="proposal-campaign">Lançamento Linha Natural Skin</div>
+              <div class="proposal-tags">
+                <span class="badge badge-success">Beleza</span>
+                <span class="badge badge-accent">5 stories + 1 post</span>
+              </div>
+            </div>
+            <div class="proposal-right">
+              <div class="proposal-value">R$ 6.800</div>
+              <div class="proposal-deadline">Prazo: 20 Jul 2026</div>
+              <div class="proposal-actions">
+                <button class="btn btn-ghost btn-sm" onclick="navigate('chat')">Chat</button>
+                <button class="btn btn-success btn-sm" onclick="showToast('✅ Proposta aceita!')">Aceitar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="proposal-card">
+            <div class="proposal-brand-logo" style="background:linear-gradient(135deg,#1a1000,#0d0a00)">☕</div>
+            <div class="proposal-info">
+              <div class="proposal-brand">CafeBrand</div>
+              <div class="proposal-campaign">Campanha Morning Routine</div>
+              <div class="proposal-tags">
+                <span class="badge badge-warning">Lifestyle</span>
+                <span class="badge badge-accent">2 reels</span>
+              </div>
+            </div>
+            <div class="proposal-right">
+              <div class="proposal-value">R$ 4.200</div>
+              <div class="proposal-deadline">Prazo: 5 Ago 2026</div>
+              <div class="proposal-actions">
+                <button class="btn btn-ghost btn-sm" onclick="navigate('chat')">Chat</button>
+                <button class="btn btn-success btn-sm" onclick="showToast('✅ Proposta aceita!')">Aceitar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini Chart -->
+        <div class="chart-card" style="margin-top:24px">
+          <div class="chart-header">
+            <span class="chart-title">📈 Crescimento de Seguidores</span>
+            <span class="badge badge-success">+12.4K este mês</span>
+          </div>
+          <div class="chart-wrap">
+            <svg class="chart" viewBox="0 0 600 180" preserveAspectRatio="none" id="growth-chart"></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right col -->
+      <div>
+        <div style="margin-bottom:16px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3)">📅 Próximas Entregas</div>
+        <div class="upcoming-list">
+          <div class="upcoming-item">
+            <div class="upcoming-item-header">
+              <span class="upcoming-campaign">FashionBrand — Post Verão</span>
+              <span class="upcoming-date">Amanhã</span>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:80%;background:var(--warning)"></div></div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:6px">80% concluído</div>
+          </div>
+          <div class="upcoming-item">
+            <div class="upcoming-item-header">
+              <span class="upcoming-campaign">EcoLife — Stories</span>
+              <span class="upcoming-date">5 Jul</span>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:40%;background:var(--accent)"></div></div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:6px">40% concluído</div>
+          </div>
+          <div class="upcoming-item">
+            <div class="upcoming-item-header">
+              <span class="upcoming-campaign">SportWear — Reel</span>
+              <span class="upcoming-date">12 Jul</span>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:15%;background:var(--primary)"></div></div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:6px">15% concluído</div>
+          </div>
+        </div>
+
+        <!-- Performance Snapshot -->
+        <div class="info-card" style="margin-top:16px">
+          <div class="profile-section-title" style="margin-bottom:12px">🎯 Métricas Recentes</div>
+          <div class="info-row"><span class="info-row-label">Melhor post</span><span class="info-row-value" style="color:var(--success)">42K curtidas</span></div>
+          <div class="info-row"><span class="info-row-label">Alcance médio</span><span class="info-row-value">1.1M / post</span></div>
+          <div class="info-row"><span class="info-row-label">Compartilhamentos</span><span class="info-row-value">8.4K / mês</span></div>
+          <div class="info-row"><span class="info-row-label">Cliques no link</span><span class="info-row-value">24.2K / mês</span></div>
+          <div class="info-row"><span class="info-row-label">Comentários</span><span class="info-row-value">3.8K / post</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══════ MODAL: PROPOR CAMPANHA ═══════ -->
+<div class="modal-overlay" id="campaign-modal" onclick="closeModalOnBg(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">🚀 Propor Campanha</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Empresa</label>
+        <input type="text" class="form-input" placeholder="Nome da sua empresa" id="modal-empresa" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Orçamento</label>
+        <input type="text" class="form-input" placeholder="R$ 0,00" id="modal-orcamento" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nome da Campanha</label>
+      <input type="text" class="form-input" placeholder="Ex: Lançamento Coleção Verão 2026" id="modal-campanha" />
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Início</label>
+        <input type="date" class="form-input" id="modal-inicio" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Entrega</label>
+        <input type="date" class="form-input" id="modal-entrega" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tipo de Conteúdo</label>
+      <select class="form-input">
+        <option>Post no Feed</option>
+        <option>Stories</option>
+        <option>Reels / TikTok</option>
+        <option>YouTube Review</option>
+        <option>Live</option>
+        <option>Pacote Completo</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Briefing</label>
+      <textarea class="form-textarea" placeholder="Descreva os objetivos, tom de voz, referências e entregáveis esperados da campanha..." id="modal-briefing"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary btn-lg" onclick="submitProposal()">🚀 Enviar Proposta</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TOAST CONTAINER ═══════ -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
